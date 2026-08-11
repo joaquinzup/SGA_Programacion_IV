@@ -1,152 +1,45 @@
-const alumnos = [
-    {
-        id: 1,
-        nombre: "Juan"
-    },
-    {
-        id: 2,
-        nombre: "María",
-    },
-    {
-        id: 3,
-        nombre: "Pedro",
-    }
-];
+const formulario = document.querySelector("#formAlumno")
+const listaAlumnos = document.querySelector("#listaAlumnos")
 
-const materias = [
-    {
-        id: 1,
-        nombre: "Matemáticas"
-    },
-    {
-        id: 2,
-        nombre: "Ciencias"
-    },
-    {
-        id: 3,
-        nombre: "Historia"
-    }
-];
+formulario.addEventListener("submit", function(event){
 
-const docentes = [
-    {
-        id: 1,
-        nombre: "Dr. García"
-    },
-    {
-        id: 2,
-        nombre: "Lic. Rodríguez"
-    },
-    {
-        id: 3,
-        nombre: "Ing. López"
-    }
-];
+    event.preventDefault();
 
-function obtenerAlumnos(){
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve(alumnos);
-        }, 3000);
-    })
+    const nombre = document.querySelector("#nombre").value
+    const carrera = document.querySelector("#carrera").value
+    const correo = document.querySelector("#correo").value
+
+    const alumno = {
+
+    id: Date.now(),
+    nombre: nombre,
+    carrera: carrera,
+    correo: correo
+
+}
+const alumnos = obtenerAlumnos()
+alumnos.push(alumno)
+
+localStorage.setItem("alumnos", JSON.stringify(alumnos))
+
+mostrarAlumnos(alumnos)
+
+formulario.reset()
+});
+
+function obtenerAlumnos() {
+    const datos = localStorage.getItem("alumnos")
+    return datos ? JSON.parse(datos) : [];
 }
 
-async function mostrarAlumnos(){
-    const datos = await obtenerAlumnos();
-    console.table(datos);
-}
-
-mostrarAlumnos();
-
-// crear obtenerMaterias()
-// crear obtenerDocentes()
-// mostrar los datos a travez de async/await
-
-function obtenerMaterias(){
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve(materias);
-        }, 3000);
-    })
-}
-
-async function mostrarMaterias(){
-    const datos = await obtenerMaterias();
-    console.table(datos);
-}
-
-function obtenerDocentes(){
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve(docentes);
-        }, 3000);
-    })
-}
-
-async function mostrarDocentes(){
-    const datos = await obtenerDocentes();
-    console.table(datos);
-}
-
-async function obtenerAlumnos(){
-    const respuesta = await fetch("https://jsonplaceholder.typicode.com/users");
-    const alumnos = await respuesta.json();
-    return alumnos
-}
-
-function mostrarAlumno(alumnos){
-    console.log(alumnos);
-    // console.log(alumnos[0]);
-    // for (const alumno of alumnos) {
-    //     console.log(alumno.id, alumno.name);
-    // }
-}
-
-async function iniciar(){
-    const alumnos = await obtenerAlumnos();
-    mostrarAlumno(alumnos);
-}
-
-iniciar();
-
-// /post 
-// /comet
-// traer de cada uno solo el id,titulo y usuario 
-
-async function obtenerPosts(){
-    const respuesta = await fetch("https://jsonplaceholder.typicode.com/posts");
-    const posts = await respuesta.json();
-    return posts;
-}
-
-function mostrarPosts(posts){
-    for (const post of posts){
-        console.log(post.id, post.title, post.userId);
+function mostrarAlumnos(alumnos){
+    listaAlumnos.innerHTML = ""
+    for (const alumno of alumnos) {
+        listaAlumnos.innerHTML += `
+        <li>
+            ${alumno.nombre} -
+            ${alumno.carrera} -
+            ${alumno.correo}
+        </li>`
     }
 }
-
-async function iniciarPosts(){
-    const posts = await obtenerPosts();
-    mostrarPosts(posts);
-}
-
-iniciarPosts();
-
-async function obtenerComentarios(){
-    const respuesta = await fetch("https://jsonplaceholder.typicode.com/comments");
-    const comentarios = await respuesta.json();
-    return comentarios;
-}
-
-function mostrarComentarios(comentarios){
-    for (const comentario of comentarios){
-        console.log(comentario.id, comentario.postId, comentario.name);
-    }
-}
-
-async function iniciaComentarios(){
-    const comentarios = await obtenerComentarios();
-    mostrarComentarios(comentarios);
-}
-
-iniciaComentarios();
