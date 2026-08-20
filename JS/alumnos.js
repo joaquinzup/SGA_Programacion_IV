@@ -6,33 +6,41 @@ formulario.addEventListener("submit", function(event){
 
     event.preventDefault();
 
-    const nombre = document.querySelector("#nombre").value
-    const carrera = document.querySelector("#carrera").value
-    const correo = document.querySelector("#correo").value
+    const nombre = document.querySelector("#nombre").value.trim()
+    const carrera = document.querySelector("#carrera").value.trim()
+    const correo = document.querySelector("#correo").value.trim()
 
-    const alumno = {
+    if (alumnoEditandoId === null) {
+        const alumno = {
+            id: Date.now(),
+            nombre: nombre,
+            carrera: carrera,
+            correo: correo
+        }
+        alumnos.push(alumno)
+        mostrarMensaje("Alumno guardado correctamente", "mje-exito")
+    } else {
+        const alumno = alumnos.find(alumno => alumno.id === alumnoEditandoId)
+        alumno.nombre = nombre
+        alumno.carrera = carrera
+        alumno.correo = correo
+        alumnoEditandoId = null
+        formulario.querySelector("button").textContent = "Guardar Alumno"
 
-    id: Date.now(),
-    nombre: nombre,
-    carrera: carrera,
-    correo: correo
-
-}
-const alumnos = obtenerAlumnos()
-alumnos.push(alumno)
-
-localStorage.setItem("alumnos", JSON.stringify(alumnos))
-mostrarMensaje("Alumno registrado correctamente ✅")    
-mostrarAlumnos(alumnos)
-
-formulario.reset()
+        mostrarMensaje("Alumno actualizado correctamente", "mje-exito")
+    }
+    localStorage.setItem("alumnos", JSON.stringify(alumnos))
+    mostraAlumnos(alumnos)
+    formulario.reset()
 });
 
-function mostrarMensaje(texto){
-    mensaje.textContent = texto
+function mostrarMensaje(texto, tipo) {
+    mensaje.textContent = texto;
+    mensaje.className = tipo
     setTimeout(() => {
-        mensaje.textContent = ""
-    }, 3000)
+        mensaje.textContent = " ";
+        mensaje.className = "oculto"
+    }, 3000);
 }
 
 function obtenerAlumnos() {
@@ -63,14 +71,18 @@ function eliminarAlumno(id) {
     const alumnosActualizados = alumnos.filter(alumno => alumno.id !== id)
     localStorage.setItem("alumnos", JSON.stringify(alumnosActualizados))
     mostrarAlumnos(alumnosActualizados)
-    mostrarMensaje("Alumno eliminado correctamente ❌")
+    mostrarMensaje("Alumno eliminado correctamente", "mje-exito")
 }
 
 listaAlumnos.addEventListener("click", function(event){
-    if (event.target.classList.contains("eliminar")) {
-        const id = parseInt(event.target.dataset.id)
+    if (e.target.classList.contains("btn-eliminar")) {
+        const id = Number(e.target.dataset.id)
         eliminarAlumno(id)
-}
+    }
+    if (e.target.classList.contains("btn-editar")) {
+        const id = Number(e.target.dataset.id)
+        editarAlumno(id)
+    }
 })
 
 function editarAlumno(id) {
@@ -81,4 +93,14 @@ function editarAlumno(id) {
     document.querySelector("#correo").value = alumno.correo
     alumnoEditandoId = id
 }
+if (!correo.includes("@")) {
+        mostrarMensaje("Ingrese un correo electrónico válido", "mje-error")
+        return
+    }
+    if (nombre.length < 3) {
+        mostrarMensaje("El nombre debe tener al menos 3 caracteres", "mje-error")
+        return
+    }
+
+    
 
