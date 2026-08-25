@@ -5,7 +5,7 @@ const cantAlumnos = document.querySelector("#cantAlumnos")
 
 let alumnos = obtenerAlumnos()
 let alumnoEditandoId = null
-
+let alumnoEditar = null
 formulario.addEventListener("submit", function (event) {
 
     event.preventDefault();
@@ -13,7 +13,7 @@ formulario.addEventListener("submit", function (event) {
     const nombre = document.querySelector("#nombre").value.trim()
     const carrera = document.querySelector("#carrera").value.trim()
     const correo = document.querySelector("#correo").value.trim()
-
+    
     if (nombre.length < 3) {
         mostrarMensaje("El nombre debe tener al menos 3 caracteres", "mje-error")
         return
@@ -37,31 +37,34 @@ formulario.addEventListener("submit", function (event) {
         alumno.nombre = nombre
         alumno.carrera = carrera
         alumno.correo = correo
+
+        const datosActuales = {
+            nombre: nombre,
+            carrera: carrera,
+            correo: correo
+        }
+
+        if(datosActuales.nombre === alumnoEditar.nombre && datosActuales.carrera === alumnoEditar.carrera && datosActuales.correo === alumnoEditar.correo) {
+            mostrarMensaje("No se realizaron cambios en los datos del alumno", "mje-error")
+            return
+        }
+        alumnoEditar = null
         alumnoEditandoId = null
         formulario.querySelector("button").textContent = "Guardar ✅"
 
         mostrarMensaje("Alumno actualizado correctamente", "mje-exito")
     }
 
-    localStorage.setItem("alumnos", JSON.stringify(alumnos))
+    guardarDatos("alumnos", alumnos)
     mostrarAlumnos(alumnos)
     formulario.reset()
 });
 
-function mostrarMensaje(texto, clase) {
-    mensaje.textContent = texto;
-    mensaje.className = `mensaje ${clase}`
-    mensaje.style.display = "block"
-    setTimeout(() => {
-        mensaje.textContent = "none";
-        mensaje.style.display = "none"
-    }, 3000);
+function obtenerAlumnos() {
+    return obtenerDatos("alumnos")
 }
 
-function obtenerAlumnos() {
-    const datos = localStorage.getItem("alumnos")
-    return datos ? JSON.parse(datos) : [];
-}
+mostrarAlumnos(alumnos)
 
 function mostrarAlumnos(alumnos) {
     listaAlumnos.innerHTML = ""
@@ -97,7 +100,7 @@ function mostrarAlumnos(alumnos) {
 
 function eliminarAlumno(id) {
     alumnos = obtenerAlumnos().filter(alumno => alumno.id !== id)
-    localStorage.setItem("alumnos", JSON.stringify(alumnos))
+    guardarDatos("alumnos", alumnos)
     mostrarAlumnos(alumnos)
     mostrarMensaje("Alumno eliminado correctamente", "mje-exito")
 }
@@ -109,6 +112,11 @@ function editarAlumno(id) {
     document.querySelector("#nombre").value = alumno.nombre
     document.querySelector("#carrera").value = alumno.carrera
     document.querySelector("#correo").value = alumno.correo
+    alumnoEditar = {
+        nombre: alumno.nombre,
+        carrera: alumno.carrera,
+        correo: alumno.correo
+    }
     alumnoEditandoId = id
     formulario.querySelector("button").textContent = "Actualizar ✏️"
 }
@@ -123,6 +131,3 @@ listaAlumnos.addEventListener("click", function (event) {
         editarAlumno(id)
     }
 })
-
-// Primer renderizado al cargar la página
-mostrarAlumnos(alumnos)
