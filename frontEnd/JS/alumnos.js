@@ -6,6 +6,9 @@ const cantAlumnos = document.querySelector("#cantAlumnos")
 let alumnos = obtenerAlumnos()
 let alumnoEditandoId = null
 let alumnoEditar = null
+const btnCancelar = document.querySelector("#btn-cancelar")
+btnCancelar.style.display = "none"
+const btnGuardar = document.querySelector("#btn-guardar")
 formulario.addEventListener("submit", function (event) {
 
     event.preventDefault();
@@ -45,7 +48,7 @@ formulario.addEventListener("submit", function (event) {
         }
 
         if(datosActuales.nombre === alumnoEditar.nombre && datosActuales.carrera === alumnoEditar.carrera && datosActuales.correo === alumnoEditar.correo) {
-            mostrarMensaje("No se realizaron cambios en los datos del alumno", "mje-error")
+            mostrarMensaje("No se realizaron cambios en los datos del alumno", "mje-adv")
             return
         }
         alumnoEditar = null
@@ -118,8 +121,21 @@ function editarAlumno(id) {
         correo: alumno.correo
     }
     alumnoEditandoId = id
-    formulario.querySelector("button").textContent = "Actualizar ✏️"
+    btnCancelar.style.display = "inline-block"
+
+    btnGuardar.textContent = "Actualizar ✏️"
+    document.querySelector("nombre").focus()
 }
+
+function cancelarEdicion() {
+    formulario.reset()
+    alumnoEditandoId = null
+    alumnoEditar = null
+    btnCancelar.style.display = "none"
+    formulario.querySelector("button").textContent = "Guardar ✅"
+}
+
+btnCancelar.addEventListener("click", cancelarEdicion)
 
 listaAlumnos.addEventListener("click", function (event) {
     if (event.target.classList.contains("eliminar")) {

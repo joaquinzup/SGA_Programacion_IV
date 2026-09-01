@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+    <script src="JS/alumnos.js" defer></script>
+</head>
+<body>
+    <header>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="alumnos.html">Alumnos</a>
+        <a href="profesores.html">Profesores</a>
+    </nav>
+    </header>
+    <main>
+        <h1>Gestion de Alumnos</h1>
+        <section class="formulario">
+    <h2>Alta de alumno</h2>
+    <form id ="formulario">
+        <div class="campo">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre">
+        </div>
+        <div class="campo">
+        <label for="carrera">Carrera</label>
+        <input type="text" id="carrera">
+        </div>
+        <div class="campo">
+        <label for="correo">Correo</label>
+        <input type="texto" id="correo">
+        </div>
+        <button type="submit">Guardar ✅</button>
+    </form>
+    </section>
+    <section class="alunnos">
+        <h2>Alumnos Registrados</h2>
+        <p id="cantAlumnos"></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Carrera</th>
+                    <th>Correo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="listaAlumnos"></tbody>
+        </table>
+    </section>
+    <div id="mensaje" class="mensaje"></div>
+    </main>
+    <footer>
+        <p>© 2026 Sistema de Gestion Academica</p>
+    </footer>
+</body>
+</html>

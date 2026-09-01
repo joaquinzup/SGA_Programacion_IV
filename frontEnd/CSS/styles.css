@@ -1,0 +1,674 @@
+/* ============================================================
+   SGA — Sistema de Gestión Académica
+   Hoja de estilos general
+   Tipografías: Fraunces (títulos) + Public Sans (texto/datos)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+    /* Paleta — academia / libro de calificaciones */
+    --ink: #16233f;
+    --ink-soft: #3c4a68;
+    --ink-faint: #6b7590;
+
+    --bg: #eef1f6;
+    --surface: #ffffff;
+    --surface-alt: #f6f8fb;
+
+    --line: #dde2ec;
+    --line-strong: #c3cadb;
+
+    --gold: #b8862c;
+    --gold-dark: #93691f;
+    --gold-soft: #f4e9d3;
+
+    --success-bg: #e3f3e9;
+    --success-text: #1f7a4c;
+    --error-bg: #fbe8e7;
+    --error-text: #b3392f;
+    --warn-bg: #fdf1dc;
+    --warn-text: #9c6a12;
+
+    --radius-s: 6px;
+    --radius-m: 10px;
+    --radius-l: 16px;
+
+    --shadow-s: 0 1px 2px rgba(22, 35, 63, 0.06);
+    --shadow-m: 0 8px 24px rgba(22, 35, 63, 0.10);
+    --shadow-l: 0 16px 40px rgba(22, 35, 63, 0.16);
+
+    --font-display: "Fraunces", "Georgia", serif;
+    --font-body: "Public Sans", "Segoe UI", Arial, sans-serif;
+
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+/* ---------- Reset base ---------- */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background-color: var(--bg);
+    background-image:
+        radial-gradient(circle at 100% 0%, rgba(184, 134, 44, 0.07), transparent 45%),
+        radial-gradient(circle at 0% 100%, rgba(22, 35, 63, 0.05), transparent 40%);
+    background-attachment: fixed;
+    font-family: var(--font-body);
+    color: var(--ink-soft);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-display);
+    color: var(--ink);
+    margin: 0 0 8px;
+    letter-spacing: 0.2px;
+}
+
+a {
+    color: inherit;
+}
+
+:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* ---------- Header & navegación ---------- */
+header {
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0) 40%),
+        linear-gradient(120deg, var(--ink) 0%, #223257 100%);
+    color: #fff;
+    padding: 0;
+    text-align: center;
+    border-bottom: 3px solid var(--gold);
+    box-shadow: var(--shadow-m);
+}
+
+nav {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    flex-wrap: wrap;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+nav ul li {
+    display: flex;
+}
+
+nav a {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.82);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+    padding: 20px 22px;
+    position: relative;
+    transition: color 0.25s var(--ease);
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 22px;
+    right: 22px;
+    bottom: 12px;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s var(--ease);
+}
+
+nav a:hover,
+nav a:focus-visible {
+    color: #fff;
+}
+
+nav a:hover::after,
+nav a:focus-visible::after,
+nav a.active::after {
+    transform: scaleX(1);
+}
+
+nav a.active {
+    color: #fff;
+}
+
+/* ---------- Layout general ---------- */
+main {
+    width: 92%;
+    max-width: 1040px;
+    margin: 40px auto 60px;
+}
+
+section {
+    background-color: var(--surface);
+    padding: 28px 30px;
+    margin-bottom: 28px;
+    border-radius: var(--radius-l);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-s);
+}
+
+section h2 {
+    font-size: 1.4rem;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--gold-soft);
+    position: relative;
+}
+
+.campo {
+flex-direction: column;
+gap: 6px;    
+}
+.campo label {
+    font-weight: bold;
+}
+.campo input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+.campo input:focus {
+    outline: none;
+    border-color: #2a9fd6;
+    box-shadow: 0 0 5px rgba(42, 159, 214, 0.5);
+}
+
+section h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 46px;
+    height: 2px;
+    background: var(--gold);
+}
+
+/* ---------- Portada (index.html) ---------- */
+main.inicio {
+    text-align: center;
+}
+
+main.inicio h1 {
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    font-weight: 600;
+}
+
+main.inicio > p {
+    color: var(--ink-faint);
+    font-size: 1.05rem;
+    margin-bottom: 40px;
+}
+
+.modulos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+.tarjeta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    padding: 34px 22px 28px;
+    text-decoration: none;
+    color: var(--ink-soft);
+    box-shadow: var(--shadow-s);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.tarjeta::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--ink));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease);
+}
+
+.tarjeta:hover,
+.tarjeta:focus-visible {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-m);
+    border-color: var(--line-strong);
+}
+
+.tarjeta:hover::before,
+.tarjeta:focus-visible::before {
+    transform: scaleX(1);
+}
+
+.tarjeta i {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: var(--gold-dark);
+    background: var(--gold-soft);
+    border-radius: 50%;
+    margin-bottom: 6px;
+    transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+.tarjeta:hover i {
+    background: var(--gold);
+    color: #fff;
+}
+
+.tarjeta h2 {
+    font-size: 1.15rem;
+    margin: 4px 0 0;
+}
+
+.tarjeta p {
+    margin: 0;
+    color: var(--ink-faint);
+    font-size: 0.92rem;
+}
+
+.tarjeta-deshabilitada {
+    cursor: not-allowed;
+    opacity: 0.6;
+    filter: grayscale(0.4);
+}
+
+.tarjeta-deshabilitada:hover,
+.tarjeta-deshabilitada:focus-visible {
+    transform: none;
+    box-shadow: var(--shadow-s);
+}
+
+.tarjeta-deshabilitada:hover::before {
+    transform: scaleX(0);
+}
+
+/* ---------- Formularios ---------- */
+.formulario form,
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+label {
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--ink);
+    letter-spacing: 0.2px;
+}
+
+input {
+    padding: 11px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-s);
+    background-color: var(--surface-alt);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--ink);
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+
+input::placeholder {
+    color: var(--ink-faint);
+}
+
+input:hover {
+    border-color: var(--ink-faint);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--gold);
+    background-color: var(--surface);
+    box-shadow: 0 0 0 3px rgba(184, 134, 44, 0.18);
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--radius-s);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: transform 0.15s var(--ease), box-shadow 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+
+form button[type="submit"] {
+    align-self: flex-start;
+    margin-top: 6px;
+    background: linear-gradient(120deg, var(--ink) 0%, #223257 100%);
+    color: #fff;
+    box-shadow: var(--shadow-s);
+}
+
+form button[type="submit"]:hover {
+    background: linear-gradient(120deg, #223257 0%, var(--ink) 100%);
+    box-shadow: var(--shadow-m);
+    transform: translateY(-1px);
+}
+
+form button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* ---------- Sección de listado ---------- */
+.alumnos,
+.alunnos {
+    overflow-x: auto;
+}
+
+#cantAlumnos {
+    display: inline-block;
+    margin: -8px 0 16px;
+    padding: 4px 12px;
+    background: var(--gold-soft);
+    color: var(--gold-dark);
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.94rem;
+}
+
+thead th {
+    text-align: left;
+    padding: 12px 14px;
+    background-color: var(--ink);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    font-size: 0.88rem;
+}
+
+thead th:first-child {
+    border-top-left-radius: var(--radius-s);
+}
+
+thead th:last-child {
+    border-top-right-radius: var(--radius-s);
+}
+
+tbody tr {
+    border-bottom: 1px solid var(--line);
+    transition: background-color 0.2s var(--ease);
+}
+
+tbody tr:nth-child(even) {
+    background-color: var(--surface-alt);
+}
+
+tbody tr:hover {
+    background-color: var(--gold-soft);
+}
+
+td {
+    padding: 12px 14px;
+    color: var(--ink-soft);
+    vertical-align: middle;
+}
+
+tbody tr td:first-child {
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.85rem;
+}
+
+.tabla-vacia td {
+    text-align: center;
+    padding: 26px;
+    color: var(--ink-faint);
+    font-style: italic;
+}
+
+/* ---------- Botones de acciones (editar / eliminar) ---------- */
+.editar,
+.eliminar,
+.btn-editar,
+.btn-eliminar {
+    border: 1px solid transparent;
+    padding: 7px 12px;
+    border-radius: var(--radius-s);
+    cursor: pointer;
+    margin: 0 3px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: var(--font-body);
+    transition: background-color 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.15s var(--ease);
+}
+
+.editar,
+.btn-editar {
+    background-color: var(--warn-bg);
+    color: var(--warn-text);
+    border-color: rgba(156, 106, 18, 0.25);
+}
+
+.eliminar,
+.btn-eliminar {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    border-color: rgba(179, 57, 47, 0.2);
+}
+
+.editar:hover,
+.btn-editar:hover {
+    background-color: var(--gold-dark);
+    border-color: var(--gold-dark);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.eliminar:hover,
+.btn-eliminar:hover {
+    background-color: var(--error-text);
+    border-color: var(--error-text);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+/* ---------- Mensajes / notificaciones ---------- */
+.mensaje,
+.mje-exito,
+.mje-error {
+    position: fixed;
+    top: 22px;
+    right: 22px;
+    max-width: 320px;
+    padding: 14px 18px;
+    border-radius: var(--radius-m);
+    font-weight: 600;
+    font-size: 0.92rem;
+    box-shadow: var(--shadow-l);
+    z-index: 1000;
+    border-left: 4px solid transparent;
+    animation: entrada-mensaje 0.35s var(--ease);
+}
+
+@keyframes entrada-mensaje {
+    from {
+        opacity: 0;
+        transform: translateX(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.mje-exito {
+    background-color: var(--success-bg);
+    color: var(--success-text);
+    border-left-color: var(--success-text);
+}
+
+.mje-error {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    border-left-color: var(--error-text);
+}
+
+.mje-adv {
+    background-color: var(--warn-bg);
+    color: var(--warn-text);
+    border-left-color: var(--warn-text);
+}
+
+.oculto {
+    display: none;
+}
+
+/* ---------- Footer ---------- */
+footer {
+    text-align: center;
+    padding: 22px;
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--line);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+    main {
+        width: 94%;
+        margin: 24px auto 40px;
+    }
+
+    section {
+        padding: 20px;
+    }
+
+    nav a {
+        padding: 14px 14px;
+        font-size: 0.88rem;
+    }
+
+    form button[type="submit"] {
+        align-self: stretch;
+        text-align: center;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tbody tr {
+        margin-bottom: 14px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-m);
+        padding: 10px 14px;
+        background-color: var(--surface);
+    }
+
+    tbody tr:hover {
+        background-color: var(--surface);
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 8px 2px;
+        border-bottom: 1px dashed var(--line);
+        text-align: right;
+    }
+
+    td:last-child {
+        border-bottom: none;
+        justify-content: flex-end;
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--ink);
+        text-align: left;
+    }
+
+    .mensaje,
+    .mje-exito,
+    .mje-error {
+        left: 16px;
+        right: 16px;
+        max-width: none;
+    }
+}
+
+btn-cancelar {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    border-color: rgba(179, 57, 47, 0.2);
+}
+btn-cancelar:hover {
+    background-color: var(--error-text);
+    border-color: var(--error-text);
+    color: #fff;
+    transform: translateY(-1px);
+}

@@ -1,0 +1,45 @@
+###
+
+GET http://localhost:3000/alumnos
+
+###
+
+GET http://localhost:3000/alumnos/4
+
+###
+
+GET http://localhost:3000/profesores
+
+###
+
+GET http://localhost:3000/profesores/1
+
+###
+
+GET http://localhost:3000/profesores/Matematicas/Matematicas
+
+###
+
+POST http://localhost:3000/alumnos
+Content-Type: application/json
+
+{
+    "id": "11",
+    "nombre": "Juan",
+    "carrera": "Matematicas"
+}
+
+###
+
+PUT http://localhost:3000/alumnos/4
+Content-Type: application/json
+
+{
+    "id": 4,
+    "nombre": "Juan Perez",
+    "carrera": "Fisica"
+}
+
+###
+
+DELETE 
