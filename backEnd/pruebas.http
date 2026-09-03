@@ -4,7 +4,7 @@ GET http://localhost:3000/alumnos
 
 ###
 
-GET http://localhost:3000/alumnos/4
+GET http://localhost:3000/alumnos/44
 
 ###
 
@@ -31,7 +31,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/alumnos/4
+PUT http://localhost:3000/alumnos/44
 Content-Type: application/json
 
 {
@@ -42,4 +42,22 @@ Content-Type: application/json
 
 ###
 
-DELETE 
+POST http://localhost:3000/alumnos
+Content-Type: application/json
+
+{
+    "id": "12",
+    "nombre": 123,
+    "carrera": "Matematicas"
+}
+
+###
+
+POST http://localhost:3000/alumnos
+Content-Type: application/json
+
+{
+    "id": "12",
+    "nombre": "",
+    "carrera": ""
+}

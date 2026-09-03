@@ -1,17 +1,22 @@
 const express = require('express');
 const router = express.Router();
+const { 
+     obtenerProfesores,
+     obtenerProfesor,
+     obtenerProfesorId,
+     agregarProfesor,
+     actualizarProfesor,
+     eliminarProfesor
+      } = require('../controllerss/profesores.controllers');
 
-app.get('/', (req, res) => {
-    res.json(profesores);
-}); 
+router.get('/', obtenerProfesores);
 
-app.get('/materia/:materia', (req, res) => {
-    const materia = req.params.materia;
-    const profesor = profesores.find(p => p.materia === materia);
-    res.json(profesor);
-});
-app.get('/:id', (req, res) => {
-    const id = Number(req.params.id);
-    const profesor = profesores.find(p => p.id === id);
-    res.json(profesor);
-});
+router.get('/materia/:materia', obtenerProfesor);
+
+router.get('/:id', obtenerProfesorId);
+
+router.post('/', agregarProfesor);
+
+router.put('/:id', actualizarProfesor);
+
+router.delete('/:id', eliminarProfesor);
